@@ -1,14 +1,12 @@
-// THIS IS THE SERVER 
+// THIS IS THE SERVER
 
 const express = require("express");
 const app = express();
-
 
 // run server on 3000 port
 app.listen(3000, () => {
   console.log("server started");
 });
-
 
 // The server is waiting for someone to request / (the homepage).
 // If a request comes (GET /), the server responds with "Hello, welcome to my API!".
@@ -18,9 +16,7 @@ app.get("/", (req, res) => {
 // A request is when the client asks the server for something (GET, POST, etc.).
 // A response is what the server sends back.
 
-
 app.use(express.json()); // Middleware to parse JSON
-
 
 // A client (Postman) sends a POST request to /api/nba with JSON data.
 // The server reads the request and extracts the data.
@@ -32,10 +28,9 @@ app.post("/api/nba", (req, res) => {
   res.send("Data received successfully!");
 });
 
-// difference in get and post is, in both we are sending a response but in post we are also getting the data 
+// difference in get and post is, in both we are sending a response but in post we are also getting the data and storing them
 
-
-// another example 
+// another example
 
 // app.get("/menu", (req, res) => {
 //     res.send("Pizza, Pasta, Salad");
@@ -43,14 +38,31 @@ app.post("/api/nba", (req, res) => {
 
 //  Client asks: "What’s on the menu?"
 //  Server responds: "Pizza, Pasta, Salad"
-  
-  
 
 // POST Request (Ordering a Pizza)
- 
+
 //   app.use(express.json());
-  
+
 //   app.post("/order", (req, res) => {
 //     const { item } = req.body;
 //     res.send(`Your ${item} is being prepared!`);
 //   });
+
+// --------------------- database connection --------------------------
+
+const mongoose = require("mongoose");
+
+const mongoUrl = "mongodb://localhost:27017/mydatabase";
+
+// this returns a promise, so then and catch
+mongoose
+  .connect(mongoUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("connection successfull");
+  })
+  .catch((error) => {
+    console.log("connection unsuccessfull");
+  });
